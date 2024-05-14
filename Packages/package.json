@@ -1,0 +1,7 @@
+{
+  "name": "com.defios.llamacppunity",
+  "version": "1.0.0",
+  "displayName": "LlamaCppUnity",
+  "description": "C# bindings for llama.cpp for Unity",
+  "unity": "2022.3"
+}
