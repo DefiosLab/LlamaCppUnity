@@ -1,0 +1,20 @@
+image: ubuntu:20.04
+
+stages:
+  - format-check
+cache:
+  paths:
+   - .cache/
+before_script:
+  - mkdir -p .cache
+  - apt-get update
+  
+  
+format-check:
+  stage: format-check
+  script:
+    - apt-get install -y astyle git
+    - astyle --options=.astyle --recursive "*.cs"
+    - git diff --exit-code || (echo "Code style violations detected. Please run AStyle locally to fix them." && exit 1)
+  only:
+    - push
