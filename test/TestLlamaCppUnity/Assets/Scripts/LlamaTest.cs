@@ -48,7 +48,7 @@ namespace LlamaCppUnityTest
 
       #endif
 
-      if (result != "1. styczary (Mercury), 2. Venus, ")
+      if (result != "1. styczarius (Jupiter), 2. Mars, 3")
       {
         throw new Exception("The results do not match");
       }
