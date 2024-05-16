@@ -23,9 +23,9 @@ test_sdk:
   stage: test_sdk
   script:
     - apt-get install -y git wget make gcc g++ git-lfs openssl libssl1.1 libssl-dev
-    - git lfs pull
     - bash test/ci/install_dotnet.sh
     - bash test/ci/build_llama.sh 
+    - bash test_ci/download_gguf.sh
     - bash test/ci/run.sh
   only:
     - push
