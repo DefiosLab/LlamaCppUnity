@@ -1,8 +1,7 @@
 set -e 
 pushd test/ci/
 export PATH=$HOME/.dotnet:$PATH
-cp ../TestLlamaCppUnity/Assets/Scripts/main.cs Program.cs
-cp ../TestLlamaCppUnity/Assets/Scripts/LlamaTest.cs .
+cp main.cs Program.cs
 cp -r ../../Packages/Runtime .
 ls 
 export DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1
