@@ -743,19 +743,19 @@ namespace LlamaCppUnity
 
       // Not Impl logitprocessor
       LlamaSamplingParams samplingParams = new LlamaSamplingParams(topK: topK,
-          topP: topP,
-          minP: minP,
-          tfsZ: tfsZ,
-          typicalP: typicalP,
-          temp: temp,
-          penaltyLastN: _lastNTokensSize,
-          penaltyRepeat: repeatPenalty,
-          penaltyFreq: frequencyPenalty,
-          penaltyPresent: presencePenalty,
-          mirostat: mirostatMode,
-          mirostatTau: mirostatTau,
-          mirostatEta: mirostatEta,
-          penalizeNl: penalizeNl);
+        topP: topP,
+        minP: minP,
+        tfsZ: tfsZ,
+        typicalP: typicalP,
+        temp: temp,
+        penaltyLastN: _lastNTokensSize,
+        penaltyRepeat: repeatPenalty,
+        penaltyFreq: frequencyPenalty,
+        penaltyPresent: presencePenalty,
+        mirostat: mirostatMode,
+        mirostatTau: mirostatTau,
+        mirostatEta: mirostatEta,
+        penalizeNl: penalizeNl);
       LlamaSamplingContext samplingContext = new LlamaSamplingContext(samplingParams, grammar);
       samplingContext.Prev = EvalTokens();
       Int32 id = samplingContext.Sample(_ctx, logitsArray: logits);
