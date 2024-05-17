@@ -3,7 +3,7 @@ on: [push]
 
 jobs:
   format-check:
-    runs-on: ubuntu:20.04
+    runs-on: ubuntu-20.04
     steps: 
       - run: apt-get install -y astyle git
       - run: astyle --options=.astyle --recursive "*.cs"
