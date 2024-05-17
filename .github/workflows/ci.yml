@@ -1,0 +1,14 @@
+name: CI
+on: [push]
+
+jobs:
+  format-check:
+    runs-on: ubuntu:20.04
+    steps: 
+      - run: apt-get install -y astyle git
+      - run: astyle --options=.astyle --recursive "*.cs"
+      - run: git diff --exit-code || (echo "Code style violations detected. Please run AStyle locally to fix them." && exit 1)
+
+  # test: 
+  #   runs-on: ubuntu:20.04
+  #   steps: 
