@@ -737,7 +737,7 @@ namespace LlamaCppUnity
 
         for (Int32 i = 0; i < cols; i++)
         {
-            logits[i] = _scores[(Int32)idx, i];
+          logits[i] = _scores[(Int32)idx, i];
         }
       }
 
