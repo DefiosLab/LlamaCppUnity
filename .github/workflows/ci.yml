@@ -5,11 +5,11 @@ jobs:
   format-check:
     runs-on: ubuntu-20.04
     steps: 
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update
       - run: sudo apt-get install -y astyle git
-      - run: cd /home/runner/work/LlamaCppUnity/LlamaCppUnity/
       - run: astyle --options=.astyle --recursive "*.cs"
       - run: git diff --exit-code || (echo "Code style violations detected. Please run AStyle locally to fix them." && exit 1)
-
   # test: 
   #   runs-on: ubuntu:20.04
   #   steps: 
