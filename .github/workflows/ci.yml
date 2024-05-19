@@ -31,8 +31,7 @@ jobs:
             ${{ runner.os }}-build-
       - run: mkdir -p .cache
       - run: sudo apt-get update
-      # - run: apt-get install -y git wget make gcc g++ git-lfs openssl libssl1.1 libssl-dev
-      - run: sudo apt-get install -y git wget make gcc g++ git-lfs openssl libssl3 libssl-dev
+      - run: apt-get install -y git wget make gcc g++ git-lfs openssl libssl1.1 libssl-dev
       - run: bash test/ci/install_dotnet.sh
       - run: bash test/ci/build_llama.sh
       - run: bash test/ci/download_gguf.sh
