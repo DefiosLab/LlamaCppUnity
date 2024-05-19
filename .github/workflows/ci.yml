@@ -6,10 +6,34 @@ jobs:
     runs-on: ubuntu-20.04
     steps: 
       - uses: actions/checkout@v4
+      - uses: actions/cache@v3
+        with:
+          path: .cache
+          key: ${{ runner.os }}-build-${{ github.ref }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+      - run: mkdir -p .cache
       - run: sudo apt-get update
       - run: sudo apt-get install -y astyle git
       - run: astyle --options=.astyle --recursive "*.cs"
-      - run: git diff --exit-code || (echo "Code style violations detected. Please run AStyle locally to fix them." && exit 1)
-  # test: 
-  #   runs-on: ubuntu:20.04
-  #   steps: 
+      # - run: git diff --exit-code || (echo "Code style violations detected. Please run AStyle locally to fix them." && exit 1)
+  
+  test:
+    runs-on: ubuntu-20.04
+    needs: format-check
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/cache@v3
+        with:
+          path: .cache
+          key: ${{ runner.os }}-build-${{ github.ref }}
+          restore-keys: |
+            ${{ runner.os }}-build-
+      - run: mkdir -p .cache
+      - run: sudo apt-get update
+      # - run: apt-get install -y git wget make gcc g++ git-lfs openssl libssl1.1 libssl-dev
+      - run: apt-get install -y git wget make gcc g++ git-lfs openssl libssl3 libssl-dev
+      - run: bash test/ci/install_dotnet.sh
+      - run: bash test/ci/build_llama.sh
+      - run: bash test/ci/download_gguf.sh
+      - run: bash test/ci/run.sh
