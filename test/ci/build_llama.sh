@@ -1,6 +1,10 @@
 #!/bin/bash
 set -e
-pushd $CI_PROJECT_DIR/.cache/
+if [ -n "${GITHUB_WORKSPACE}" ]; then
+    pushd "${GITHUB_WORKSPACE}/.cache"
+elif [ -n "${CI_PROJECT_DIR}" ]; then
+    pushd "${CI_PROJECT_DIR}/.cache"
+fi
 if [ ! -d "llama.cpp" ]; then
     git clone https://github.com/ggerganov/llama.cpp.git
 fi
