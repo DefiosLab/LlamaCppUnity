@@ -1,0 +1,14 @@
+mode=cs
+style=allman
+indent=spaces=2
+indent-namespaces
+indent-switches
+indent-cases
+keep-one-line-blocks
+keep-one-line-statements
+indent-preproc-cond
+pad-header
+pad-oper
+suffix=none
+break-blocks
+indent-col1-comments
