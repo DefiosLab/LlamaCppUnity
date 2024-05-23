@@ -11,3 +11,4 @@ pad-header
 pad-oper
 suffix=none
 break-blocks
+indent-col1-comments
