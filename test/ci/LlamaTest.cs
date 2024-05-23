@@ -18,7 +18,7 @@ namespace LlamaCppUnityTest
   {
     public static void GenerateTest()
     {
-      Llama test = new Llama("Assets/Models/llama-2-7b-chat.Q2_K.gguf", verbose: true);
+      Llama test = new Llama("llama-2-7b-chat.Q2_K.gguf", verbose: true);
       int seed = 20;
       string prompt = "Q: Name the planets in the solar system? A: ";
       string result = test.Run(prompt, seed: seed);
