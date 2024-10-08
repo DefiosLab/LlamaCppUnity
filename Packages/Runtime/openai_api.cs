@@ -12,7 +12,7 @@ using System.Net;
 using System.Net.Http;
 using System.Collections.Generic;
 
-namespace OpenAI
+namespace WebAI
 {
   [Serializable]
   public class requestBody
@@ -59,12 +59,13 @@ namespace OpenAI
   public class Client
   {
     private readonly string _apiKey;
-    private const string _apiUrl = "https://openrouter.ai/api/v1/chat/completions";
+    private readonly string _apiUrl;
     private readonly HttpClient _client = new HttpClient();
 
-    public Client(string apiKey)
+    public Client(string apiKey, string apiUrl)
     {
       _apiKey = apiKey;
+      _apiUrl = apiUrl;
       _client.DefaultRequestHeaders.Add("Authorization", $"Bearer {_apiKey}");
     }
 

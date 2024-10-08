@@ -14,7 +14,7 @@ using LlamaCppUnity.Tokenizer;
 using LlamaCppUnity.Helper;
 using LlamaCppUnity.Grammar;
 using System.Collections.Generic;
-using OpenAI;
+using WebAPI;
 #if UNITY
 using UnityEngine;
 #endif
@@ -1031,13 +1031,13 @@ namespace LlamaCppUnity
   // }
   //     List<LogitsProcessor>
 
-  public class OpenAIAPI
+  public class WebAIAPI
   {
-    private Client? _openAIAPI;
+    private Client? _webAIAPI;
 
-    public OpenAIAPI(string apiKey)
+    public WebAIAPI(string apiKey, string apiUrl)
     {
-      _openAIAPI = new Client(apiKey);
+      _webAIAPI = new Client(apiKey, apiUrl);
     }
 
     public ResponseWrapper RunAPI(
