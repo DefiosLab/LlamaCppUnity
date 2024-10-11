@@ -14,7 +14,7 @@ using LlamaCppUnity.Tokenizer;
 using LlamaCppUnity.Helper;
 using LlamaCppUnity.Grammar;
 using System.Collections.Generic;
-using WebAPI;
+using WebAI;
 #if UNITY
 using UnityEngine;
 #endif
@@ -1055,7 +1055,7 @@ namespace LlamaCppUnity
       Int32? maxTokens = null
     )
     {
-      ResponseWrapper jsonResponse = _openAIAPI.GenerateResponse(
+      ResponseWrapper jsonResponse = _webAIAPI.GenerateResponse(
                                        model: model,
                                        prompt: prompt,
                                        temperature: temperature,

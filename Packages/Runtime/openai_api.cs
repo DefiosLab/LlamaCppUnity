@@ -15,21 +15,6 @@ using System.Collections.Generic;
 namespace WebAI
 {
   [Serializable]
-  public class requestBody
-  {
-    public string? model;
-    public Message[]? messages;
-    public Dictionary<string, object> additional_parameters = new Dictionary<string, object>();
-
-    [Serializable]
-    public class Message
-    {
-      public string? role;
-      public string? content;
-    }
-  }
-
-  [Serializable]
   public class responseBody
   {
     public Choise[]? choices;
@@ -84,39 +69,30 @@ namespace WebAI
       Int32? maxTokens
     )
     {
-      var requestBody = new requestBody
+      var messages = new List<Dictionary<string, string>>
       {
-        model = model,
-        messages = new[]
+        new Dictionary<string, string>
         {
-          new requestBody.Message
-          {
-            role = "user",
-            content = prompt
-          }
+          {"role", "user"},
+          {"content", prompt}
         }
       };
 
-      // Add optional parameters
-      if (temperature.HasValue) requestBody.additional_parameters["temperature"] = temperature.Value;
-
-      if (topP.HasValue) requestBody.additional_parameters["top_p"] = topP.Value;
-
-      if (topK.HasValue) requestBody.additional_parameters["top_k"] = topK.Value;
-
-      if (frequencyPenalty.HasValue) requestBody.additional_parameters["frequency_penalty"] = frequencyPenalty.Value;
-
-      if (presencePenalty.HasValue) requestBody.additional_parameters["presence_penalty"] = presencePenalty.Value;
-
-      if (repetitionPenalty.HasValue) requestBody.additional_parameters["repetition_penalty"] = repetitionPenalty.Value;
-
-      if (minP.HasValue) requestBody.additional_parameters["min_p"] = minP.Value;
-
-      if (topA.HasValue) requestBody.additional_parameters["top_a"] = topA.Value;
-
-      if (seed.HasValue) requestBody.additional_parameters["seed"] = seed.Value;
-
-      if (maxTokens.HasValue) requestBody.additional_parameters["max_tokens"] = maxTokens.Value;
+      var requestBody = new Dictionary<string, object>
+      {
+        {"model", model},
+        {"messages", messages},
+        { "temperature", temperature ?? null },
+        { "top_p", topP ?? null },
+        { "top_k", topK ?? null },
+        { "frequency_penalty", frequencyPenalty ?? null },
+        { "presence_penalty", presencePenalty ?? null },
+        { "repetition_penalty", repetitionPenalty ?? null },
+        { "min_p", minP ?? null },
+        { "top_a", topA ?? null },
+        { "seed", seed ?? null },
+        { "max_tokens", maxTokens ?? null }
+      };
 
       #if UNITY
       var request = JsonUtility.ToJson(requestBody);
