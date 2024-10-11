@@ -15,9 +15,10 @@ using System.Collections.Generic;
 namespace WebAI
 {
   [Serializable]
-  public class responseBody
+  public class ResponseBody
   {
     public Choise[]? choices;
+    public Error? error;
 
     [Serializable]
     public class Choise
@@ -29,6 +30,12 @@ namespace WebAI
     public class Message
     {
       public string? content;
+    }
+
+    [Serializable]
+    public class Error
+    {
+      public string? message;
     }
   }
 
@@ -102,7 +109,7 @@ namespace WebAI
       {
         HttpResponseMessage response = _client.PostAsync(_apiUrl, content).Result;
         string responseBody = response.Content.ReadAsStringAsync().Result;
-        var parsedResponse = JsonUtility.FromJson<responseBody>(responseBody);
+        var parsedResponse = JsonUtility.FromJson<ResponseBody>(responseBody);
 
         if (response.IsSuccessStatusCode)
         {
