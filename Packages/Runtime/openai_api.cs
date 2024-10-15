@@ -14,6 +14,24 @@ using System.Collections.Generic;
 
 namespace WebAI
 {
+  // TODO: Unityと.netでjson構造のやつも分ける
+  #if UNITY
+  [Serializable]
+  public class requestBody
+  {
+    public string? model;
+    public Message[]? messages;
+    public Dictionary<string, object> additionalParameters = new Dictionary<string, object>();
+
+    [Serializable]
+    public class Message
+    {
+      public string? role;
+      public string? content;
+    }
+  }
+  #endif
+
   [Serializable]
   public class ResponseBody
   {
@@ -76,6 +94,42 @@ namespace WebAI
       Int32? maxTokens
     )
     {
+      #if UNITY
+      var requestBody = new requestBody
+      {
+        model = model,
+        messages = new[]
+        {
+          new requestBody.Message
+          {
+            role = "user",
+            content = prompt
+          }
+        }
+      };
+
+      // Add additional parameters
+      if (temperature.HasValue) requestBody.additionalParameters["temperature"] = temperature.Value;
+
+      if (topP.HasValue) requestBody.additionalParameters["top_p"] = topP.Value;
+
+      if (topK.HasValue) requestBody.additionalParameters["top_k"] = topK.Value;
+
+      if (frequencyPenalty.HasValue) requestBody.additionalParameters["frequency_penalty"] = frequencyPenalty.Value;
+
+      if (presencePenalty.HasValue) requestBody.additionalParameters["presence_penalty"] = presencePenalty.Value;
+
+      if (repetitionPenalty.HasValue) requestBody.additionalParameters["repetition_penalty"] = repetitionPenalty.Value;
+
+      if (minP.HasValue) requestBody.additionalParameters["min_p"] = minP.Value;
+
+      if (topA.HasValue) requestBody.additionalParameters["top_a"] = topA.Value;
+
+      if (seed.HasValue) requestBody.additionalParameters["seed"] = seed.Value;
+
+      if (maxTokens.HasValue) requestBody.additionalParameters["max_tokens"] = maxTokens.Value;
+
+      #else
       var messages = new List<Dictionary<string, string>>
       {
         new Dictionary<string, string>
@@ -100,6 +154,7 @@ namespace WebAI
         { "seed", seed ?? null },
         { "max_tokens", maxTokens ?? null }
       };
+      #endif
 
       #if UNITY
       var request = JsonUtility.ToJson(requestBody);
