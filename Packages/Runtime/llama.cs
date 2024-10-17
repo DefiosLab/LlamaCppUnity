@@ -1045,12 +1045,8 @@ namespace LlamaCppUnity
       string prompt,
       float? temperature = 1.0f,
       float? topP = 1.0f,
-      Int32? topK = 0,
       float? frequencyPenalty = 0.0f,
       float? presencePenalty = 0.0f,
-      float? repetitionPenalty = 1.0f,
-      float? minP = 0.0f,
-      float? topA = 0.0f,
       Int32? seed = null,
       Int32? maxTokens = null
     )
@@ -1060,12 +1056,8 @@ namespace LlamaCppUnity
                                        prompt: prompt,
                                        temperature: temperature,
                                        topP: topP,
-                                       topK: topK,
                                        frequencyPenalty: frequencyPenalty,
                                        presencePenalty: presencePenalty,
-                                       repetitionPenalty: repetitionPenalty,
-                                       minP: minP,
-                                       topA: topA,
                                        seed: seed,
                                        maxTokens: maxTokens
                                      );

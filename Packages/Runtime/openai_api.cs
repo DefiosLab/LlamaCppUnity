@@ -84,12 +84,8 @@ namespace WebAI
       string prompt,
       float? temperature,
       float? topP,
-      Int32? topK,
       float? frequencyPenalty,
       float? presencePenalty,
-      float? repetitionPenalty,
-      float? minP,
-      float? topA,
       Int32? seed,
       Int32? maxTokens
     )
@@ -113,17 +109,9 @@ namespace WebAI
 
       if (topP.HasValue) requestBody.additionalParameters["top_p"] = topP.Value;
 
-      if (topK.HasValue) requestBody.additionalParameters["top_k"] = topK.Value;
-
       if (frequencyPenalty.HasValue) requestBody.additionalParameters["frequency_penalty"] = frequencyPenalty.Value;
 
       if (presencePenalty.HasValue) requestBody.additionalParameters["presence_penalty"] = presencePenalty.Value;
-
-      if (repetitionPenalty.HasValue) requestBody.additionalParameters["repetition_penalty"] = repetitionPenalty.Value;
-
-      if (minP.HasValue) requestBody.additionalParameters["min_p"] = minP.Value;
-
-      if (topA.HasValue) requestBody.additionalParameters["top_a"] = topA.Value;
 
       if (seed.HasValue) requestBody.additionalParameters["seed"] = seed.Value;
 
@@ -145,12 +133,8 @@ namespace WebAI
         {"messages", messages},
         { "temperature", temperature ?? null },
         { "top_p", topP ?? null },
-        { "top_k", topK ?? null },
         { "frequency_penalty", frequencyPenalty ?? null },
         { "presence_penalty", presencePenalty ?? null },
-        { "repetition_penalty", repetitionPenalty ?? null },
-        { "min_p", minP ?? null },
-        { "top_a", topA ?? null },
         { "seed", seed ?? null },
         { "max_tokens", maxTokens ?? null }
       };
