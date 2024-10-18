@@ -155,6 +155,7 @@ namespace WebAI
 
       #if UNITY
       var request = JsonUtility.ToJson(requestBody);
+      Debug.Log($"Request JSON: {request}"); // リクエストJSONをログ出力
       var content = new StringContent(request, System.Text.Encoding.UTF8, "application/json");
 
       try
