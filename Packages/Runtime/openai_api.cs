@@ -14,14 +14,12 @@ using System.Collections.Generic;
 
 namespace WebAI
 {
-  // TODO: Unityと.netでjson構造のやつも分ける
   #if UNITY
   [Serializable]
   public class requestBody
   {
     public string? model;
     public Message[]? messages;
-    // public Dictionary<string, object> additionalParameters = new Dictionary<string, object>();
     public float? temperature;
     public float? top_p;
     public float? frequency_penalty;
@@ -117,19 +115,6 @@ namespace WebAI
         max_tokens = maxTokens
       };
 
-      // // Add additional parameters
-      // if (temperature.HasValue) requestBody.additionalParameters["temperature"] = temperature.Value;
-
-      // if (topP.HasValue) requestBody.additionalParameters["top_p"] = topP.Value;
-
-      // if (frequencyPenalty.HasValue) requestBody.additionalParameters["frequency_penalty"] = frequencyPenalty.Value;
-
-      // if (presencePenalty.HasValue) requestBody.additionalParameters["presence_penalty"] = presencePenalty.Value;
-
-      // if (seed.HasValue) requestBody.additionalParameters["seed"] = seed.Value;
-
-      // if (maxTokens.HasValue) requestBody.additionalParameters["max_tokens"] = maxTokens.Value;
-
       #else
       var messages = new List<Dictionary<string, string>>
       {
@@ -155,7 +140,6 @@ namespace WebAI
 
       #if UNITY
       var request = JsonUtility.ToJson(requestBody);
-      Debug.Log($"Request JSON: {request}"); // リクエストJSONをログ出力
       var content = new StringContent(request, System.Text.Encoding.UTF8, "application/json");
 
       try
