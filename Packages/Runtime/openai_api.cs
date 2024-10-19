@@ -20,12 +20,12 @@ namespace WebAI
   {
     public string model;
     public Message[] messages;
-    public float temperature = 1.0f;
-    public float top_p = 1.0f;
-    public float frequency_penalty = 0.0f;
-    public float presence_penalty = 0.0f;
-    public int? seed = null;
-    public int? max_tokens = null;
+    public float? temperature;
+    public float? top_p;
+    public float? frequency_penalty;
+    public float? presence_penalty;
+    public int? seed;
+    public int? max_tokens;
 
     [Serializable]
     public class Message
@@ -100,17 +100,17 @@ namespace WebAI
         model = model,
         messages = new[]
         {
-          new requestBody.Message
+          new RequestBody.Message
           {
             role = "user",
             content = prompt
           }
         },
 
-        temperature = temperature,
-        top_p = topP,
-        frequency_penalty = frequencyPenalty,
-        presence_penalty = presencePenalty,
+        temperature = temperature ?? 1.0f,
+        top_p = topP ?? 1.0f,
+        frequency_penalty = frequencyPenalty ?? 0.0f,
+        presence_penalty = presencePenalty ?? 0.0f,
         seed = seed,
         max_tokens = maxTokens
       };
