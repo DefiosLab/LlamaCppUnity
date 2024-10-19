@@ -16,16 +16,16 @@ namespace WebAI
 {
   #if UNITY
   [Serializable]
-  public class requestBody
+  public class RequestBody
   {
-    public string? model;
-    public Message[]? messages;
-    public float? temperature;
-    public float? top_p;
-    public float? frequency_penalty;
-    public float? presence_penalty;
-    public int? seed;
-    public int? max_tokens;
+    public string model;
+    public Message[] messages;
+    public float temperature = 1.0f;
+    public float top_p = 1.0f;
+    public float frequency_penalty = 0.0f;
+    public float presence_penalty = 0.0f;
+    public int? seed = null;
+    public int? max_tokens = null;
 
     [Serializable]
     public class Message
@@ -95,7 +95,7 @@ namespace WebAI
     )
     {
       #if UNITY
-      var requestBody = new requestBody
+      var requestBody = new RequestBody
       {
         model = model,
         messages = new[]
