@@ -68,7 +68,6 @@ namespace WebAI
 
     public RequestBody PrepareForSerialization()
     {
-      // -1の値は送信しない（デフォルト値を使用する）ようにする
       var cleaned = new RequestBody
       {
           model = this.model,
@@ -79,7 +78,6 @@ namespace WebAI
           presence_penalty = this.presence_penalty
       };
 
-      // オプショナルなパラメータは-1でない場合のみ設定
       if (this.seed != -1) cleaned.seed = this.seed;
       if (this.max_tokens != -1) cleaned.max_tokens = this.max_tokens;
 
@@ -167,25 +165,6 @@ namespace WebAI
                         );
       
       var requestBody = body.PrepareForSerialization();
-      // var requestBody = new RequestBody
-      // {
-      //   model = model,
-      //   messages = new[]
-      //   {
-      //     new RequestBody.Message
-      //     {
-      //       role = "user",
-      //       content = prompt
-      //     }
-      //   },
-
-      //   temperature = temperature ?? 1.0f,
-      //   top_p = topP ?? 1.0f,
-      //   frequency_penalty = frequencyPenalty ?? 0.0f,
-      //   presence_penalty = presencePenalty ?? 0.0f,
-      //   seed = seed,
-      //   max_tokens = maxTokens
-      // };
 
       #else
       var messages = new List<Dictionary<string, string>>
