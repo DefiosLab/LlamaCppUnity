@@ -119,8 +119,8 @@ namespace WebAI
       float? topP,
       float? frequencyPenalty,
       float? presencePenalty,
-      Int32 seed,
-      Int32 maxTokens
+      Int32? seed,
+      Int32? maxTokens
     )
     {
       #if UNITY
@@ -188,6 +188,9 @@ namespace WebAI
       #if UNITY
       var request = JsonUtility.ToJson(requestBody);
       var content = new StringContent(request, System.Text.Encoding.UTF8, "application/json");
+
+      Console.WriteLine(request);
+      Console.WriteLine(content);
 
       try
       {
