@@ -15,23 +15,52 @@ using System.Collections.Generic;
 namespace WebAI
 {
   #if UNITY
-  [Serializable]
+  // [Serializable]
   public class RequestBody
   {
-    public string model;
-    public Message[] messages;
-    public float? temperature;
-    public float? top_p;
-    public float? frequency_penalty;
-    public float? presence_penalty;
+    public string model = "";
+    public Message[] messages = new Message[0];
+    public float? temperature = 1.0f;
+    public float? top_p = 1.0f;
+    public float? frequency_penalty = 0.0f;
+    public float? presence_penalty = 0.0f;
     public int? seed;
     public int? max_tokens;
 
     [Serializable]
     public class Message
     {
-      public string? role;
-      public string? content;
+      public string? role = "";
+      public string? content = "";
+    }
+
+    public static RequestBody Create(
+      string model,
+      string prompt,
+      float? temperature,
+      float? topP,
+      float? frequencyPenalty,
+      float? presencePenalty,
+      int? seed,
+      int? maxTokens
+    )
+    {
+      return new RequestBody
+      {
+        model = model,
+        messages = new[] {
+          new Message {
+            role = "user",
+            content = prompt
+          }
+        },
+        temperature = temperature ?? 1.0f,
+        top_p = topP ?? 1.0f,
+        frequency_penalty = frequencyPenalty ?? 0.0f,
+        presence_penalty = presencePenalty ?? 0.0f,
+        seed = seed,
+        max_tokens = maxTokens
+      };
     }
   }
   #endif
@@ -95,25 +124,35 @@ namespace WebAI
     )
     {
       #if UNITY
-      var requestBody = new RequestBody
-      {
-        model = model,
-        messages = new[]
-        {
-          new RequestBody.Message
-          {
-            role = "user",
-            content = prompt
-          }
-        },
+      var requestBody = RequestBody.Create(
+                          model,
+                          prompt,
+                          temperature,
+                          topP,
+                          frequencyPenalty,
+                          presencePenalty,
+                          seed,
+                          maxTokens
+                        );
+      // var requestBody = new RequestBody
+      // {
+      //   model = model,
+      //   messages = new[]
+      //   {
+      //     new RequestBody.Message
+      //     {
+      //       role = "user",
+      //       content = prompt
+      //     }
+      //   },
 
-        temperature = temperature ?? 1.0f,
-        top_p = topP ?? 1.0f,
-        frequency_penalty = frequencyPenalty ?? 0.0f,
-        presence_penalty = presencePenalty ?? 0.0f,
-        seed = seed,
-        max_tokens = maxTokens
-      };
+      //   temperature = temperature ?? 1.0f,
+      //   top_p = topP ?? 1.0f,
+      //   frequency_penalty = frequencyPenalty ?? 0.0f,
+      //   presence_penalty = presencePenalty ?? 0.0f,
+      //   seed = seed,
+      //   max_tokens = maxTokens
+      // };
 
       #else
       var messages = new List<Dictionary<string, string>>
@@ -147,6 +186,8 @@ namespace WebAI
         HttpResponseMessage response = _client.PostAsync(_apiUrl, content).Result;
         string responseBody = response.Content.ReadAsStringAsync().Result;
         var parsedResponse = JsonUtility.FromJson<ResponseBody>(responseBody);
+
+        console.WriteLine(responseBody);
 
         if (response.IsSuccessStatusCode)
         {
@@ -199,6 +240,8 @@ namespace WebAI
         HttpResponseMessage response = _client.PostAsync(_apiUrl, content).Result;
         string responseBody = response.Content.ReadAsStringAsync().Result;
         string? parsedResponse;
+
+        Console.WriteLine(responseBody);
 
         if (response.IsSuccessStatusCode)
         {
