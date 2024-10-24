@@ -124,6 +124,14 @@ namespace WebAI
     )
     {
       #if UNITY
+      Debug.Log($"model: {model}");
+      Debug.Log($"prompt: {prompt}");
+      Debug.Log($"temperature: {temperature}");
+      Debug.Log($"topP: {topP}");
+      Debug.Log($"frequencyPenalty: {frequencyPenalty}");
+      Debug.Log($"presencePenalty: {presencePenalty}");
+      Debug.Log($"seed: {seed}");
+      Debug.Log($"maxTokens: {maxTokens}");
       var requestBody = RequestBody.Create(
                           model,
                           prompt,
