@@ -187,7 +187,8 @@ namespace WebAI
         string responseBody = response.Content.ReadAsStringAsync().Result;
         var parsedResponse = JsonUtility.FromJson<ResponseBody>(responseBody);
 
-        Console.WriteLine(responseBody);
+        // Console.WriteLine(responseBody);
+        Debug.Log(responseBody);
 
         if (response.IsSuccessStatusCode)
         {
