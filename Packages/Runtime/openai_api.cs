@@ -20,12 +20,12 @@ namespace WebAI
   {
     public string model = "";
     public Message[] messages = new Message[0];
-    public float? temperature = 1.0f;
-    public float? top_p = 1.0f;
-    public float? frequency_penalty = 0.0f;
-    public float? presence_penalty = 0.0f;
-    public int? seed;
-    public int? max_tokens;
+    public float temperature = 1.0f;
+    public float top_p = 1.0f;
+    public float frequency_penalty = 0.0f;
+    public float presence_penalty = 0.0f;
+    public int seed = -1;
+    public int max_tokens = -1;
 
     [Serializable]
     public class Message
@@ -45,22 +45,45 @@ namespace WebAI
       int? maxTokens
     )
     {
-      return new RequestBody
+      var body = new RequestBody
       {
         model = model,
         messages = new[] {
           new Message {
-            role = "user",
-            content = prompt
+              role = "user",
+              content = prompt
           }
-        },
-        temperature = temperature ?? 1.0f,
-        top_p = topP ?? 1.0f,
-        frequency_penalty = frequencyPenalty ?? 0.0f,
-        presence_penalty = presencePenalty ?? 0.0f,
-        seed = seed,
-        max_tokens = maxTokens
+        }
       };
+
+      if (temperature.HasValue) body.temperature = temperature.Value;
+      if (topP.HasValue) body.top_p = topP.Value;
+      if (frequencyPenalty.HasValue) body.frequency_penalty = frequencyPenalty.Value;
+      if (presencePenalty.HasValue) body.presence_penalty = presencePenalty.Value;
+      if (seed.HasValue) body.seed = seed.Value;
+      if (maxTokens.HasValue) body.max_tokens = maxTokens.Value;
+
+      return body;
+    }
+
+    public RequestBody PrepareForSerialization()
+    {
+      // -1の値は送信しない（デフォルト値を使用する）ようにする
+      var cleaned = new RequestBody
+      {
+          model = this.model,
+          messages = this.messages,
+          temperature = this.temperature,
+          top_p = this.top_p,
+          frequency_penalty = this.frequency_penalty,
+          presence_penalty = this.presence_penalty
+      };
+
+      // オプショナルなパラメータは-1でない場合のみ設定
+      if (this.seed != -1) cleaned.seed = this.seed;
+      if (this.max_tokens != -1) cleaned.max_tokens = this.max_tokens;
+
+      return cleaned;
     }
   }
   #endif
@@ -132,7 +155,7 @@ namespace WebAI
       Debug.Log($"presencePenalty: {presencePenalty}");
       Debug.Log($"seed: {seed}");
       Debug.Log($"maxTokens: {maxTokens}");
-      var requestBody = RequestBody.Create(
+      var body = RequestBody.Create(
                           model,
                           prompt,
                           temperature,
@@ -142,6 +165,8 @@ namespace WebAI
                           seed,
                           maxTokens
                         );
+      
+      var requestBody = body.PrepareForSerialization();
       // var requestBody = new RequestBody
       // {
       //   model = model,
