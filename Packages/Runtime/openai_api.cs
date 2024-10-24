@@ -24,8 +24,8 @@ namespace WebAI
     public float? top_p = 1.0f;
     public float? frequency_penalty = 0.0f;
     public float? presence_penalty = 0.0f;
-    public int seed;
-    public int max_tokens;
+    public int? seed;
+    public int? max_tokens;
 
     [Serializable]
     public class Message
@@ -41,8 +41,8 @@ namespace WebAI
       float? topP,
       float? frequencyPenalty,
       float? presencePenalty,
-      int seed,
-      int maxTokens
+      int? seed,
+      int? maxTokens
     )
     {
       return new RequestBody
