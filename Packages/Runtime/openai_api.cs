@@ -189,8 +189,8 @@ namespace WebAI
       var request = JsonUtility.ToJson(requestBody);
       var content = new StringContent(request, System.Text.Encoding.UTF8, "application/json");
 
-      Console.WriteLine(request);
-      Console.WriteLine(content);
+      Debug.Log(request);
+      Debug.Log(content);
 
       try
       {
