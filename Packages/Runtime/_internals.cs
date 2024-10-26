@@ -1086,7 +1086,7 @@ namespace LlamaCppUnity
         _candidatesData = new LlamaTokenData[_nVocab];
         _candidates = new LlamaTokenDataArrayStruct();
         _candidates.Data = Marshal.UnsafeAddrOfPinnedArrayElement(_candidatesData, 0);
-        _candidates.Size =  (IntPtr)_nVocab;
+        _candidates.Size =  (UIntPtr)_nVocab;
         _candidates.Sorted = false;
         _defaultCandidatesDataId = Enumerable.Range(0, _nVocab).ToArray();
         _defaultCandidatesDataP = new float[_nVocab];
@@ -1102,7 +1102,7 @@ namespace LlamaCppUnity
 
         _candidates.Data = Marshal.UnsafeAddrOfPinnedArrayElement(_candidatesData, 0);
         _candidates.Sorted = false;
-        _candidates.Size = (IntPtr)_nVocab;
+        _candidates.Size = (UIntPtr)_nVocab;
       }
       public LlamaTokenDataArrayStruct Candidates
       {
