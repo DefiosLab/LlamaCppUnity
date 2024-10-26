@@ -146,7 +146,7 @@ namespace LlamaCppUnity
     public struct LlamaTokenDataArrayStruct
     {
       public IntPtr Data;
-      public IntPtr Size; // size_t
+      public UIntPtr Size; // size_t
       [MarshalAs(UnmanagedType.I1)]
       public bool Sorted;
     }
