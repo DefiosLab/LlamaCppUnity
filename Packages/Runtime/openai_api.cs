@@ -15,7 +15,6 @@ using System.Collections.Generic;
 namespace WebAI
 {
   #if UNITY
-  // [Serializable]
   public class RequestBody
   {
     public string model = "";
@@ -30,8 +29,8 @@ namespace WebAI
     [Serializable]
     public class Message
     {
-      public string? role = "";
-      public string? content = "";
+      public string role;
+      public string content;
     }
 
     public static RequestBody Create(
@@ -50,17 +49,22 @@ namespace WebAI
         model = model,
         messages = new[] {
           new Message {
-              role = "user",
-              content = prompt
+            role = "user",
+            content = prompt
           }
         }
       };
 
       if (temperature.HasValue) body.temperature = temperature.Value;
+
       if (topP.HasValue) body.top_p = topP.Value;
+
       if (frequencyPenalty.HasValue) body.frequency_penalty = frequencyPenalty.Value;
+
       if (presencePenalty.HasValue) body.presence_penalty = presencePenalty.Value;
+
       if (seed.HasValue) body.seed = seed.Value;
+
       if (maxTokens.HasValue) body.max_tokens = maxTokens.Value;
 
       return body;
@@ -70,15 +74,16 @@ namespace WebAI
     {
       var cleaned = new RequestBody
       {
-          model = this.model,
-          messages = this.messages,
-          temperature = this.temperature,
-          top_p = this.top_p,
-          frequency_penalty = this.frequency_penalty,
-          presence_penalty = this.presence_penalty
+        model = this.model,
+        messages = this.messages,
+        temperature = this.temperature,
+        top_p = this.top_p,
+        frequency_penalty = this.frequency_penalty,
+        presence_penalty = this.presence_penalty
       };
 
       if (this.seed != -1) cleaned.seed = this.seed;
+
       if (this.max_tokens != -1) cleaned.max_tokens = this.max_tokens;
 
       return cleaned;
@@ -145,25 +150,17 @@ namespace WebAI
     )
     {
       #if UNITY
-      Debug.Log($"model: {model}");
-      Debug.Log($"prompt: {prompt}");
-      Debug.Log($"temperature: {temperature}");
-      Debug.Log($"topP: {topP}");
-      Debug.Log($"frequencyPenalty: {frequencyPenalty}");
-      Debug.Log($"presencePenalty: {presencePenalty}");
-      Debug.Log($"seed: {seed}");
-      Debug.Log($"maxTokens: {maxTokens}");
       var body = RequestBody.Create(
-                          model,
-                          prompt,
-                          temperature,
-                          topP,
-                          frequencyPenalty,
-                          presencePenalty,
-                          seed,
-                          maxTokens
-                        );
-      
+                   model,
+                   prompt,
+                   temperature,
+                   topP,
+                   frequencyPenalty,
+                   presencePenalty,
+                   seed,
+                   maxTokens
+                 );
+
       var requestBody = body.PrepareForSerialization();
 
       #else
@@ -192,9 +189,6 @@ namespace WebAI
       #if UNITY
       var request = JsonUtility.ToJson(requestBody);
       var content = new StringContent(request, System.Text.Encoding.UTF8, "application/json");
-
-      Debug.Log(request);
-      Debug.Log(content);
 
       try
       {
@@ -256,8 +250,6 @@ namespace WebAI
         HttpResponseMessage response = _client.PostAsync(_apiUrl, content).Result;
         string responseBody = response.Content.ReadAsStringAsync().Result;
         string? parsedResponse;
-
-        Console.WriteLine(responseBody);
 
         if (response.IsSuccessStatusCode)
         {
