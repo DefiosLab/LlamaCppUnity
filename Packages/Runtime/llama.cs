@@ -14,6 +14,7 @@ using LlamaCppUnity.Tokenizer;
 using LlamaCppUnity.Helper;
 using LlamaCppUnity.Grammar;
 using System.Collections.Generic;
+using WebAI;
 #if UNITY
 using UnityEngine;
 #endif
@@ -1029,4 +1030,39 @@ namespace LlamaCppUnity
   //     }
   // }
   //     List<LogitsProcessor>
+
+  public class WebAIAPI
+  {
+    private Client? _webAIAPI;
+
+    public WebAIAPI(string apiKey, string apiUrl)
+    {
+      _webAIAPI = new Client(apiKey, apiUrl);
+    }
+
+    public ResponseWrapper RunAPI(
+      string model,
+      string prompt,
+      float? temperature = 1.0f,
+      float? topP = 1.0f,
+      float? frequencyPenalty = 0.0f,
+      float? presencePenalty = 0.0f,
+      Int32? seed = null,
+      Int32? maxTokens = null
+    )
+    {
+      ResponseWrapper jsonResponse = _webAIAPI.GenerateResponse(
+                                       model: model,
+                                       prompt: prompt,
+                                       temperature: temperature,
+                                       topP: topP,
+                                       frequencyPenalty: frequencyPenalty,
+                                       presencePenalty: presencePenalty,
+                                       seed: seed,
+                                       maxTokens: maxTokens
+                                     );
+
+      return jsonResponse;
+    }
+  }
 }
